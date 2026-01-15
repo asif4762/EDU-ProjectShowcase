@@ -102,7 +102,7 @@ Instructions:
 
     // Use OpenAI to generate the response
     const response = await openai.chat.completions.create({
-      model: "gpt-4", // You can also use other models like gpt-3.5-turbo
+      model: "gpt-4o-mini", // You can also use other models like gpt-3.5-turbo
       messages: [{ role: "system", content: systemPrompt }, { role: "user", content: message }],
       max_tokens: 500,
       temperature: 0.7,
