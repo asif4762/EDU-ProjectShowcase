@@ -212,7 +212,7 @@ export function AICoachPanel({
       {/* Header */}
       <div className="p-4 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-linear-to-r from-primary to-accent flex items-center justify-center">
             <Bot className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
@@ -249,7 +249,7 @@ export function AICoachPanel({
                     initial={{ width: 0 }}
                     animate={{ width: `${suggestion.confidence}%` }}
                     transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
-                    className="h-full bg-gradient-to-r from-primary to-accent"
+                    className="h-full bg-linear-to-r from-primary to-accent"
                   />
                 </div>
               </motion.div>
@@ -270,8 +270,8 @@ export function AICoachPanel({
                 className={`flex gap-3 ${message.role === "user" ? "flex-row-reverse" : ""}`}
               >
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    message.role === "assistant" ? "bg-gradient-to-r from-primary to-accent" : "bg-secondary"
+                  className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                    message.role === "assistant" ? "bg-linear-to-r from-primary to-accent" : "bg-secondary"
                   }`}
                 >
                   {message.role === "assistant" ? (
@@ -296,7 +296,7 @@ export function AICoachPanel({
 
           {isLoading && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-linear-to-r from-primary to-accent flex items-center justify-center">
                 <Loader2 className="w-4 h-4 text-primary-foreground animate-spin" />
               </div>
               <div className="bg-secondary rounded-2xl px-4 py-2">
@@ -328,7 +328,7 @@ export function AICoachPanel({
               key={action.label}
               variant="outline"
               size="sm"
-              className="flex-shrink-0 text-xs bg-transparent"
+              className="shrink-0 text-xs bg-transparent"
               onClick={() => {
                 setInput(action.label)
                 setTimeout(() => handleSend(), 100)
@@ -362,7 +362,7 @@ export function AICoachPanel({
             size="icon"
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
-            className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+            className="bg-linear-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
           >
             <Send className="w-4 h-4" />
           </Button>

@@ -196,7 +196,7 @@ export function MinesweeperGame({ gameState, setGameState }: MinesweeperGameProp
                     ? cell.isMine
                       ? "bg-destructive"
                       : "bg-muted"
-                    : "bg-gradient-to-br from-primary/30 to-accent/30 hover:from-primary/40 hover:to-accent/40"
+                    : "bg-linear-to-br from-primary/30 to-accent/30 hover:from-primary/40 hover:to-accent/40"
                 }`}
                 whileHover={{ scale: cell.isRevealed ? 1 : 1.05 }}
                 whileTap={{ scale: 0.95 }}

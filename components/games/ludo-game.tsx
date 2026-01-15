@@ -194,7 +194,7 @@ export function LudoGame({ gameState, setGameState }: LudoGameProps) {
         })}
 
         {/* Center */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg flex items-center justify-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-linear-to-br from-primary/30 to-accent/30 rounded-lg flex items-center justify-center">
           <span className="text-xl font-bold text-primary">HOME</span>
         </div>
       </div>
@@ -204,7 +204,7 @@ export function LudoGame({ gameState, setGameState }: LudoGameProps) {
         size="lg"
         onClick={rollDice}
         disabled={isRolling || diceValue !== null || currentPlayer !== "red" || gameState.status !== "playing"}
-        className="bg-gradient-to-r from-primary to-accent"
+        className="bg-linear-to-r from-primary to-accent"
       >
         <Dices className="w-5 h-5 mr-2" />
         {isRolling ? "Rolling..." : "Roll Dice"}

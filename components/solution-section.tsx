@@ -69,7 +69,7 @@ export function SolutionSection() {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="relative h-[400px] lg:h-[500px] order-2 lg:order-1"
+            className="relative h-100 lg:h-125 order-2 lg:order-1"
           >
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
               <Suspense fallback={null}>
@@ -112,7 +112,7 @@ export function SolutionSection() {
                   transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                   className="flex gap-4"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                  <div className="shrink-0 w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
                     <solution.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>

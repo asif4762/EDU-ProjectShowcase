@@ -121,7 +121,7 @@ export function HeroSection() {
       </div>
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/30 to-background z-10" />
+      <div className="absolute inset-0 bg-linear-to-b from-background/50 via-background/30 to-background z-10" />
 
       {/* Content */}
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">

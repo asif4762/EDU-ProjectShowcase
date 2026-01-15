@@ -47,11 +47,11 @@ function FloatingChessPiece({
     <Float speed={2} rotationIntensity={1} floatIntensity={2}>
       <group ref={meshRef} position={position} scale={scale}>
         <mesh>
-          <cylinderGeometry args={[0.3, 0.5, 1.5, 16]} />
+          <cylinderGeometry args={[0.3, 0.5, 1.5, 16] as any} />
           <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
         </mesh>
         <mesh position={[0, 0.9, 0]}>
-          <sphereGeometry args={[0.35, 16, 16]} />
+          <sphereGeometry args={[0.35, 16, 16] as any} />
           <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
         </mesh>
       </group>
@@ -72,15 +72,15 @@ function FloatingKing({ position, color }: { position: [number, number, number];
     <Float speed={1.5} rotationIntensity={0.5} floatIntensity={3}>
       <group ref={meshRef} position={position}>
         <mesh>
-          <cylinderGeometry args={[0.4, 0.6, 2, 16]} />
+          <cylinderGeometry args={[0.4, 0.6, 2, 16] as any} />
           <meshStandardMaterial color={color} metalness={0.9} roughness={0.1} />
         </mesh>
         <mesh position={[0, 1.2, 0]}>
-          <boxGeometry args={[0.15, 0.5, 0.15]} />
+          <boxGeometry args={[0.15, 0.5, 0.15] as any} />
           <meshStandardMaterial color={color} metalness={0.9} roughness={0.1} />
         </mesh>
         <mesh position={[0, 1.2, 0]}>
-          <boxGeometry args={[0.5, 0.15, 0.15]} />
+          <boxGeometry args={[0.5, 0.15, 0.15] as any} />
           <meshStandardMaterial color={color} metalness={0.9} roughness={0.1} />
         </mesh>
       </group>
@@ -101,7 +101,7 @@ function FloatingDice({ position, color }: { position: [number, number, number];
   return (
     <Float speed={2} rotationIntensity={1.5} floatIntensity={2}>
       <mesh ref={meshRef} position={position}>
-        <boxGeometry args={[0.8, 0.8, 0.8]} />
+        <boxGeometry args={[0.8, 0.8, 0.8] as any} />
         <meshStandardMaterial color={color} metalness={0.7} roughness={0.3} />
       </mesh>
     </Float>
@@ -121,11 +121,11 @@ function FloatingToken({ position, color }: { position: [number, number, number]
     <Float speed={1.8} rotationIntensity={0.8} floatIntensity={2.5}>
       <group ref={meshRef} position={position}>
         <mesh>
-          <coneGeometry args={[0.3, 0.8, 16]} />
+          <coneGeometry args={[0.3, 0.8, 16] as any} />
           <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
         </mesh>
         <mesh position={[0, -0.5, 0]}>
-          <cylinderGeometry args={[0.35, 0.35, 0.2, 16]} />
+          <cylinderGeometry args={[0.35, 0.35, 0.2, 16] as any} />
           <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
         </mesh>
       </group>
@@ -148,7 +148,7 @@ function AnimatedSphere({
 
   return (
     <mesh ref={meshRef} position={position}>
-      <sphereGeometry args={[0.8, 32, 32]} />
+      <sphereGeometry args={[0.8, 32, 32] as any} />
       <MeshDistortMaterial color={color} speed={2} distort={0.3} metalness={0.8} roughness={0.2} />
     </mesh>
   )
@@ -327,7 +327,7 @@ export function LandingPage({ onStartGame }: { onStartGame: (game: GameType) => 
     >
       {/* Scanline overlay */}
       <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden opacity-[0.03]">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white to-transparent h-[200%] animate-[scanline_8s_linear_infinite]" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-white to-transparent h-[200%] animate-[scanline_8s_linear_infinite]" />
       </div>
 
       {/* 3D Hero Section */}
@@ -336,8 +336,8 @@ export function LandingPage({ onStartGame }: { onStartGame: (game: GameType) => 
           {mounted && (
             <Suspense fallback={<LoadingFallback />}>
               <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 2]}>
-                <color attach="background" args={["#0a0a14"]} />
-                <fog attach="fog" args={["#0a0a14", 10, 50]} />
+                <color attach="background" args={["#0a0a14"] as any} />
+                <fog attach="fog" args={["#0a0a14", 10, 50] as any} />
                 <Hero3DScene />
               </Canvas>
             </Suspense>
@@ -345,8 +345,8 @@ export function LandingPage({ onStartGame }: { onStartGame: (game: GameType) => 
         </div>
 
         {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-background pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-r from-background/50 via-transparent to-background/50 pointer-events-none" />
 
         {/* Hero Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
@@ -362,7 +362,7 @@ export function LandingPage({ onStartGame }: { onStartGame: (game: GameType) => 
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-4">
-              <span className="bg-gradient-to-r from-primary via-white to-accent bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(34,197,94,0.5)]">
+              <span className="bg-linear-to-r from-primary via-white to-accent bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(34,197,94,0.5)]">
                 GAME.AI
               </span>
             </h1>
@@ -381,7 +381,7 @@ export function LandingPage({ onStartGame }: { onStartGame: (game: GameType) => 
             >
               <Button
                 size="lg"
-                className="text-lg px-8 py-6 bg-gradient-to-r from-primary to-emerald-400 hover:from-primary/90 hover:to-emerald-400/90 text-primary-foreground shadow-lg shadow-primary/25"
+                className="text-lg px-8 py-6 bg-linear-to-r from-primary to-emerald-400 hover:from-primary/90 hover:to-emerald-400/90 text-primary-foreground shadow-lg shadow-primary/25"
                 onClick={() => onStartGame("chess")}
               >
                 <Gamepad2 className="mr-2 h-5 w-5" />
@@ -509,6 +509,7 @@ export function LandingPage({ onStartGame }: { onStartGame: (game: GameType) => 
                             style={{ backgroundColor: `${game.color}20` }}
                           >
                             <GameIcon
+                            
                               className="w-6 h-6 transition-transform group-hover:scale-110"
                               style={{ color: game.color }}
                             />
@@ -545,7 +546,7 @@ export function LandingPage({ onStartGame }: { onStartGame: (game: GameType) => 
       </section>
 
       {/* Features Section */}
-      <section className="relative py-32 px-4 bg-gradient-to-b from-background via-card/50 to-background">
+      <section className="relative py-32 px-4 bg-linear-to-b from-background via-card/50 to-background">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -595,7 +596,7 @@ export function LandingPage({ onStartGame }: { onStartGame: (game: GameType) => 
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30 rounded-3xl blur-3xl" />
+            <div className="absolute inset-0 bg-linear-to-r from-primary/30 via-accent/30 to-primary/30 rounded-3xl blur-3xl" />
             <div className="relative bg-card border border-border rounded-3xl p-12 md:p-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Ready to <span className="text-primary">Level Up</span>?
@@ -606,7 +607,7 @@ export function LandingPage({ onStartGame }: { onStartGame: (game: GameType) => 
               </p>
               <Button
                 size="lg"
-                className="text-lg px-12 py-6 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-xl shadow-primary/20"
+                className="text-lg px-12 py-6 bg-linear-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-xl shadow-primary/20"
                 onClick={() => onStartGame("chess")}
               >
                 Enter the Arena

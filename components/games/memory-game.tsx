@@ -101,7 +101,7 @@ export function MemoryGame({ gameState, setGameState }: MemoryGameProps) {
                   ? "bg-primary/20 border-2 border-primary"
                   : isFlipped
                     ? "bg-card border-2 border-accent"
-                    : "bg-gradient-to-br from-primary/30 to-accent/30 border-2 border-border hover:border-primary/50"
+                    : "bg-linear-to-br from-primary/30 to-accent/30 border-2 border-border hover:border-primary/50"
               }`}
               whileHover={{ scale: isFlipped ? 1 : 1.05 }}
               whileTap={{ scale: 0.95 }}

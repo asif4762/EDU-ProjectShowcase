@@ -49,7 +49,7 @@ export function TechSection() {
 
   return (
     <section id="technology" ref={ref} className="relative py-24 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
+      <div className="absolute inset-0 bg-linear-to-b from-background via-secondary/10 to-background" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -100,7 +100,7 @@ export function TechSection() {
           className="mt-16 p-6 md:p-8 rounded-2xl bg-card border border-primary/30 max-w-3xl mx-auto"
         >
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+            <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
               <Cpu className="w-6 h-6 text-primary" />
             </div>
             <div>

@@ -64,12 +64,12 @@ function FeatureCard({
       <div className="relative h-full p-6 md:p-8 rounded-2xl bg-card border border-border overflow-hidden transition-all duration-300 hover:border-primary/50">
         {/* Gradient Background on Hover */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
+          className={`absolute inset-0 bg-linear-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
         />
 
         {/* Icon */}
         <div
-          className={`relative z-10 w-14 h-14 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+          className={`relative z-10 w-14 h-14 rounded-xl bg-linear-to-br ${feature.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
         >
           <feature.icon className="w-7 h-7 text-background" />
         </div>
@@ -82,7 +82,7 @@ function FeatureCard({
 
         {/* Corner Decoration */}
         <div
-          className={`absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br ${feature.gradient} opacity-10 blur-3xl group-hover:opacity-20 transition-opacity duration-300`}
+          className={`absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-linear-to-br ${feature.gradient} opacity-10 blur-3xl group-hover:opacity-20 transition-opacity duration-300`}
         />
       </div>
     </motion.div>
@@ -95,7 +95,7 @@ export function FeaturesSection() {
 
   return (
     <section id="features" ref={ref} className="relative py-24 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
+      <div className="absolute inset-0 bg-linear-to-b from-background via-secondary/10 to-background" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div

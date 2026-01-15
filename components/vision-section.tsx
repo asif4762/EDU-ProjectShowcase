@@ -66,7 +66,7 @@ export function VisionSection() {
           <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         </Canvas>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/50" />
+      <div className="absolute inset-0 bg-linear-to-t from-background via-background/80 to-background/50" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -96,7 +96,7 @@ export function VisionSection() {
                   transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                   className="flex items-start gap-4"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                  <div className="shrink-0 w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
                     <point.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
@@ -123,7 +123,7 @@ export function VisionSection() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8 }}
-            className="relative h-[400px] lg:h-[500px]"
+            className="relative h-100 lg:h-125"
           >
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
               <Suspense fallback={null}>

@@ -25,8 +25,12 @@ function Board() {
       {/* Holes */}
       {Array.from({ length: ROWS }).map((_, row) =>
         Array.from({ length: COLS }).map((_, col) => (
-          <mesh key={`hole-${row}-${col}`} position={[col - 3, 2.5 - row, 0]}>
-            <cylinderGeometry args={[0.4, 0.4, 1, 32]} rotation={[Math.PI / 2, 0, 0]} />
+          <mesh
+            key={`hole-${row}-${col}`}
+            position={[col - 3, 2.5 - row, 0]}
+            rotation={[Math.PI / 2, 0, 0]}
+          >
+            <cylinderGeometry args={[0.4, 0.4, 1, 32]} />
             <meshStandardMaterial color="#0a0a14" />
           </mesh>
         )),
@@ -35,7 +39,11 @@ function Board() {
   )
 }
 
-function Disc({ position, color, isNew }: { position: [number, number, number]; color: string; isNew: boolean }) {
+function Disc({
+  position,
+  color,
+  isNew,
+}: { position: [number, number, number]; color: string; isNew: boolean }) {
   const meshRef = useRef<THREE.Mesh>(null)
   const [targetY] = useState(position[1])
   const [currentY, setCurrentY] = useState(isNew ? 5 : position[1])
@@ -49,14 +57,28 @@ function Disc({ position, color, isNew }: { position: [number, number, number]; 
   })
 
   return (
-    <mesh ref={meshRef} position={[position[0], currentY, position[2]]}>
-      <cylinderGeometry args={[0.38, 0.38, 0.3, 32]} rotation={[Math.PI / 2, 0, 0]} />
-      <meshStandardMaterial color={color} metalness={0.6} roughness={0.3} emissive={color} emissiveIntensity={0.1} />
+    <mesh
+      ref={meshRef}
+      position={[position[0], currentY, position[2]]}
+      rotation={[Math.PI / 2, 0, 0]}
+    >
+      <cylinderGeometry args={[0.38, 0.38, 0.3, 32]} />
+      <meshStandardMaterial
+        color={color}
+        metalness={0.6}
+        roughness={0.3}
+        emissive={color}
+        emissiveIntensity={0.1}
+      />
     </mesh>
   )
 }
 
-function ColumnSelector({ col, onSelect, disabled }: { col: number; onSelect: () => void; disabled: boolean }) {
+function ColumnSelector({
+  col,
+  onSelect,
+  disabled,
+}: { col: number; onSelect: () => void; disabled: boolean }) {
   const [hovered, setHovered] = useState(false)
   const meshRef = useRef<THREE.Mesh>(null)
 
@@ -70,6 +92,7 @@ function ColumnSelector({ col, onSelect, disabled }: { col: number; onSelect: ()
     <mesh
       ref={meshRef}
       position={[col - 3, 4, 0]}
+      rotation={[Math.PI / 2, 0, 0]}
       onClick={(e: ThreeEvent<MouseEvent>) => {
         e.stopPropagation()
         if (!disabled) onSelect()
@@ -78,7 +101,7 @@ function ColumnSelector({ col, onSelect, disabled }: { col: number; onSelect: ()
       onPointerLeave={() => setHovered(false)}
       visible={hovered && !disabled}
     >
-      <cylinderGeometry args={[0.35, 0.35, 0.2, 32]} rotation={[Math.PI / 2, 0, 0]} />
+      <cylinderGeometry args={[0.35, 0.35, 0.2, 32]} />
       <meshStandardMaterial color="#22c55e" transparent opacity={0.7} />
     </mesh>
   )

@@ -196,7 +196,7 @@ export function GameArena({
         transition={{ delay: 0.2 }}
         className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b ${
           isChess
-            ? "bg-gradient-to-r from-amber-950/80 via-background/80 to-amber-950/80 border-amber-800/50"
+            ? "bg-linear-to-r from-amber-950/80 via-background/80 to-amber-950/80 border-amber-800/50"
             : "bg-background/80 border-border"
         }`}
       >
@@ -328,7 +328,7 @@ export function GameArena({
             exit={{ x: 50, opacity: 0 }}
             transition={{ delay: 0.4 }}
             className={`hidden lg:block w-96 border-l backdrop-blur-xl ${
-              isChess ? "border-amber-800/50 bg-gradient-to-b from-amber-950/50 to-card/50" : "border-border bg-card/50"
+              isChess ? "border-amber-800/50 bg-linear-to-b from-amber-950/50 to-card/50" : "border-border bg-card/50"
             }`}
           >
             <AICoachPanel gameState={gameState} game={game} />
@@ -350,7 +350,7 @@ export function GameArena({
             <h2 className="text-5xl md:text-7xl font-bold mb-4">
               {gameState.status === "checkmate" && (
                 <span
-                  className={`bg-gradient-to-r ${isChess ? "from-amber-400 to-amber-600" : "from-primary to-accent"} bg-clip-text text-transparent`}
+                  className={`bg-linear-to-r ${isChess ? "from-amber-400 to-amber-600" : "from-primary to-accent"} bg-clip-text text-transparent`}
                 >
                   Checkmate!
                 </span>
@@ -358,7 +358,7 @@ export function GameArena({
               {gameState.status === "draw" && <span className="text-muted-foreground">Draw!</span>}
               {gameState.status === "win" && (
                 <span
-                  className={`bg-gradient-to-r ${isChess ? "from-amber-400 to-amber-600" : "from-primary to-accent"} bg-clip-text text-transparent`}
+                  className={`bg-linear-to-r ${isChess ? "from-amber-400 to-amber-600" : "from-primary to-accent"} bg-clip-text text-transparent`}
                 >
                   Victory!
                 </span>

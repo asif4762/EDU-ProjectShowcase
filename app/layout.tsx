@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "GAME.AI | AI-Powered Chess Arena",
   description:
     "Play chess with an AI coach that provides real-time suggestions, move predictions, and strategic analysis. Powered by Google Gemini.",
-  generator: "v0.app",
+  generator: "Asif : https://github.com/asif4762, Robiul :https://github.com/RoBiul-Hasan-Jisan",
 }
 
 export const viewport: Viewport = {

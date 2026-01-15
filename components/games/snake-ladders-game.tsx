@@ -228,7 +228,7 @@ export function SnakeLaddersGame({ gameState, setGameState }: SnakeLaddersGamePr
         size="lg"
         onClick={rollDice}
         disabled={isRolling || currentTurn !== "player" || gameState.status !== "playing"}
-        className="bg-gradient-to-r from-primary to-accent"
+        className="bg-linear-to-r from-primary to-accent"
       >
         <Dices className="w-5 h-5 mr-2" />
         {isRolling ? "Rolling..." : "Roll Dice"}

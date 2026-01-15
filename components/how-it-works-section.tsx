@@ -121,7 +121,7 @@ export function HowItWorksSection() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8 }}
-            className="relative h-[400px] lg:h-[500px] order-2 lg:order-1"
+            className="relative h-100 lg:h-125 order-2 lg:order-1"
           >
             <Canvas camera={{ position: [0, 0, 6], fov: 50 }}>
               <Suspense fallback={null}>
@@ -144,7 +144,7 @@ export function HowItWorksSection() {
                 className="group flex gap-4"
               >
                 <div
-                  className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg transition-transform group-hover:scale-110"
+                  className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg transition-transform group-hover:scale-110"
                   style={{ backgroundColor: `${step.color}20`, color: step.color }}
                 >
                   {step.number}

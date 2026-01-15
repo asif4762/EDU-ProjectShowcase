@@ -35,7 +35,7 @@ export function ProblemSection() {
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
+      <div className="absolute inset-0 bg-linear-to-b from-background via-secondary/20 to-background" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -64,7 +64,7 @@ export function ProblemSection() {
               transition={{ duration: 0.6, delay: index * 0.15 }}
             >
               <div className="group relative h-full p-6 rounded-2xl bg-card border border-border hover:border-accent/50 transition-all duration-300">
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10">
                   <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <problem.icon className="w-6 h-6 text-accent" />
