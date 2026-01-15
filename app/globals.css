@@ -1,0 +1,269 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* GTA 6-inspired gaming aesthetic - bold, cinematic, neon accents */
+:root {
+  --background: oklch(0.05 0.02 280);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.08 0.025 280);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.08 0.025 280);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.7 0.25 150);
+  --primary-foreground: oklch(0.05 0.02 280);
+  --secondary: oklch(0.12 0.03 280);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.15 0.025 280);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.65 0.28 330);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.6 0.25 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.2 0.04 280);
+  --input: oklch(0.12 0.03 280);
+  --ring: oklch(0.7 0.25 150);
+  --chart-1: oklch(0.7 0.25 150);
+  --chart-2: oklch(0.65 0.28 330);
+  --chart-3: oklch(0.75 0.2 60);
+  --chart-4: oklch(0.6 0.22 200);
+  --chart-5: oklch(0.7 0.18 280);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.06 0.025 280);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-primary: oklch(0.7 0.25 150);
+  --sidebar-primary-foreground: oklch(0.05 0.02 280);
+  --sidebar-accent: oklch(0.12 0.03 280);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(0.2 0.04 280);
+  --sidebar-ring: oklch(0.7 0.25 150);
+}
+
+.dark {
+  --background: oklch(0.05 0.02 280);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.08 0.025 280);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.08 0.025 280);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.7 0.25 150);
+  --primary-foreground: oklch(0.05 0.02 280);
+  --secondary: oklch(0.12 0.03 280);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.15 0.025 280);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.65 0.28 330);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.6 0.25 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.2 0.04 280);
+  --input: oklch(0.12 0.03 280);
+  --ring: oklch(0.7 0.25 150);
+  --chart-1: oklch(0.7 0.25 150);
+  --chart-2: oklch(0.65 0.28 330);
+  --chart-3: oklch(0.75 0.2 60);
+  --chart-4: oklch(0.6 0.22 200);
+  --chart-5: oklch(0.7 0.18 280);
+  --sidebar: oklch(0.06 0.025 280);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-primary: oklch(0.7 0.25 150);
+  --sidebar-primary-foreground: oklch(0.05 0.02 280);
+  --sidebar-accent: oklch(0.12 0.03 280);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(0.2 0.04 280);
+  --sidebar-ring: oklch(0.7 0.25 150);
+}
+
+@theme inline {
+  --font-sans: "Inter", "Inter Fallback", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* GTA-style glitch effect */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes neon-pulse {
+  0%,
+  100% {
+    filter: brightness(1) drop-shadow(0 0 10px currentColor);
+  }
+  50% {
+    filter: brightness(1.2) drop-shadow(0 0 20px currentColor);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Egyptian gold shimmer animation */
+@keyframes gold-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes hieroglyph-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes pyramid-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.3), 0 0 90px rgba(212, 175, 55, 0.2);
+  }
+}
+
+.glitch-text {
+  animation: glitch 0.3s infinite;
+}
+
+.neon-glow {
+  animation: neon-pulse 2s infinite;
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+.gold-shimmer {
+  background: linear-gradient(90deg, #d4af37 0%, #ffd700 25%, #d4af37 50%, #ffd700 75%, #d4af37 100%);
+  background-size: 200% auto;
+  animation: gold-shimmer 3s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.pyramid-glow {
+  animation: pyramid-glow 3s ease-in-out infinite;
+}
+
+.hieroglyph-float {
+  animation: hieroglyph-float 4s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, oklch(0.7 0.25 150), oklch(0.65 0.28 330));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.7 0.25 150);
+}
+
+/* Chess piece glow */
+.piece-glow {
+  filter: drop-shadow(0 0 8px oklch(0.7 0.25 150));
+}
+
+.piece-glow-enemy {
+  filter: drop-shadow(0 0 8px oklch(0.65 0.28 330));
+}
+
+/* Egyptian gold glow for chess */
+.egyptian-glow {
+  filter: drop-shadow(0 0 10px #d4af37) drop-shadow(0 0 20px #d4af37);
+}
