@@ -1,21 +1,12 @@
 "use client"
 
 import type React from "react"
-import { useRef, Suspense, useState, useEffect } from "react"
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import {
-  Float,
-  Stars,
-  Sparkles,
-  Environment,
-  MeshTransmissionMaterial,
-  Center,
-} from "@react-three/drei"
-import { EffectComposer, Bloom, ChromaticAberration } from "@react-three/postprocessing"
-import * as THREE from "three"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import Image from "next/image"
+import dynamic from "next/dynamic"
 import {
   Crown,
   Target,
@@ -37,436 +28,37 @@ import {
 } from "lucide-react"
 import type { GameType, GameConfig } from "@/lib/game-types"
 
-// --- 3D Components ---
+// Dynamically import 3D scene with no SSR
+const Hero3DCanvas = dynamic(() => import("./Hero3DCanvas"), {
+  ssr: false,
+  loading: () => <Hero3DFallback />,
+})
 
-function CameraRig() {
-  const { camera, mouse } = useThree()
-  const vec = new THREE.Vector3()
-
-  useFrame(() => {
-    camera.position.lerp(vec.set(mouse.x * 2, mouse.y * 1, 12), 0.05)
-    camera.lookAt(0, 0, 0)
-  })
-  return null
-}
-
-// Realistic Chess King Piece
-function ChessKing({
-  position,
-  color,
-}: {
-  position: [number, number, number]
-  color: string
-}) {
+// Animated gradient fallback
+function Hero3DFallback() {
   return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.8}>
-      <group position={position}>
-        {/* Base */}
-        <mesh position={[0, -1, 0]} castShadow>
-          <cylinderGeometry args={[0.8, 1, 0.3, 32] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.8}
-            roughness={0.2}
+    <div className="absolute inset-0 bg-linear-to-br from-[#050505] via-[#0a0a0a] to-[#050505]">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 right-1/3 w-72 h-72 bg-pink-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
+      </div>
+      
+      {/* Floating particles */}
+      <div className="absolute inset-0">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full opacity-50"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 2}s`,
+            }}
           />
-        </mesh>
-        
-        {/* Body */}
-        <mesh position={[0, -0.3, 0]} castShadow>
-          <cylinderGeometry args={[0.6, 0.7, 1.5, 32] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.8}
-            roughness={0.2}
-          />
-        </mesh>
-        
-        {/* Neck */}
-        <mesh position={[0, 0.6, 0]} castShadow>
-          <cylinderGeometry args={[0.4, 0.5, 0.6, 32] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.8}
-            roughness={0.2}
-          />
-        </mesh>
-        
-        {/* Head */}
-        <mesh position={[0, 1.1, 0]} castShadow>
-          <sphereGeometry args={[0.5, 32, 32] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.8}
-            roughness={0.2}
-          />
-        </mesh>
-        
-        {/* Cross - Vertical */}
-        <mesh position={[0, 1.8, 0]} castShadow>
-          <boxGeometry args={[0.15, 0.8, 0.15] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.9}
-            roughness={0.1}
-          />
-        </mesh>
-        
-        {/* Cross - Horizontal */}
-        <mesh position={[0, 2, 0]} castShadow>
-          <boxGeometry args={[0.6, 0.15, 0.15] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.9}
-            roughness={0.1}
-          />
-        </mesh>
-
-        {/* Glowing aura */}
-        <pointLight color={color} intensity={2} distance={5} />
-      </group>
-    </Float>
-  )
-}
-
-// Chess Pawn
-function ChessPawn({
-  position,
-  color,
-}: {
-  position: [number, number, number]
-  color: string
-}) {
-  return (
-    <Float speed={2} rotationIntensity={0.8} floatIntensity={1}>
-      <group position={position}>
-        {/* Base */}
-        <mesh position={[0, -0.5, 0]} castShadow>
-          <cylinderGeometry args={[0.5, 0.6, 0.2, 32] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.7}
-            roughness={0.3}
-          />
-        </mesh>
-        
-        {/* Body */}
-        <mesh position={[0, 0, 0]} castShadow>
-          <cylinderGeometry args={[0.35, 0.4, 0.8, 32] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.7}
-            roughness={0.3}
-          />
-        </mesh>
-        
-        {/* Head */}
-        <mesh position={[0, 0.6, 0]} castShadow>
-          <sphereGeometry args={[0.35, 32, 32] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.7}
-            roughness={0.3}
-          />
-        </mesh>
-
-        <pointLight color={color} intensity={1.5} distance={4} />
-      </group>
-    </Float>
-  )
-}
-
-// Realistic Dice with Dots
-function FloatingDie({ position }: { position: [number, number, number] }) {
-  const groupRef = useRef<THREE.Group>(null)
-
-  useFrame((state, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.x += delta * 0.3
-      groupRef.current.rotation.y += delta * 0.4
-    }
-  })
-
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={1.5}>
-      <group ref={groupRef} position={position}>
-        {/* Main dice body */}
-        <mesh castShadow>
-          <boxGeometry args={[1.2, 1.2, 1.2] as any} />
-          <meshPhysicalMaterial
-            color="#ffffff"
-            roughness={0.1}
-            metalness={0.1}
-            clearcoat={1}
-            clearcoatRoughness={0.1}
-          />
-        </mesh>
-
-        {/* Dots on faces */}
-        {/* Face 1 - Center dot */}
-        <mesh position={[0, 0, 0.61]}>
-          <sphereGeometry args={[0.12, 16, 16] as any} />
-          <meshStandardMaterial color="#000000" />
-        </mesh>
-
-        {/* Face 6 - Six dots */}
-        {[-0.3, 0, 0.3].map((y, yi) =>
-          [-0.3, 0.3].map((x, i) => (
-            <mesh key={`${yi}-${i}`} position={[x, y, -0.61]}>
-              <sphereGeometry args={[0.08, 16, 16] as any} />
-              <meshStandardMaterial color="#000000" />
-            </mesh>
-          ))
-        )}
-
-        {/* Face 3 - Three dots diagonal */}
-        {[-0.3, 0, 0.3].map((v, i) => (
-          <mesh key={`3-${i}`} position={[0.61, v, v]}>
-            <sphereGeometry args={[0.08, 16, 16] as any} />
-            <meshStandardMaterial color="#000000" />
-          </mesh>
         ))}
-
-        {/* Rounded edges effect */}
-        <lineSegments>
-          <edgesGeometry args={[new THREE.BoxGeometry(1.2, 1.2, 1.2)] as any} />
-          <lineBasicMaterial color="#cccccc" linewidth={2} />
-        </lineSegments>
-
-        <pointLight color="#ffffff" intensity={1} distance={3} />
-      </group>
-    </Float>
-  )
-}
-
-// Playing Card
-function PlayingCard({
-  position,
-  color,
-}: {
-  position: [number, number, number]
-  color: string
-}) {
-  return (
-    <Float speed={2} rotationIntensity={2} floatIntensity={1}>
-      <group position={position} rotation={[0, 0.3, 0]}>
-        {/* Card body */}
-        <mesh castShadow>
-          <boxGeometry args={[1.2, 1.8, 0.02] as any} />
-          <meshStandardMaterial
-            color="#ffffff"
-            metalness={0.2}
-            roughness={0.1}
-          />
-        </mesh>
-        
-        {/* Card border */}
-        <mesh position={[0, 0, 0.011]}>
-          <planeGeometry args={[1.1, 1.7] as any} />
-          <meshStandardMaterial color={color} />
-        </mesh>
-
-        {/* Suit symbols */}
-        <mesh position={[0, 0.5, 0.012]}>
-          <circleGeometry args={[0.15, 32] as any} />
-          <meshStandardMaterial color={color} />
-        </mesh>
-        <mesh position={[0, -0.5, 0.012]}>
-          <circleGeometry args={[0.15, 32] as any} />
-          <meshStandardMaterial color={color} />
-        </mesh>
-
-        {/* Glowing edge */}
-        <lineSegments>
-          <edgesGeometry args={[new THREE.BoxGeometry(1.2, 1.8, 0.02)] as any} />
-          <lineBasicMaterial color={color} linewidth={2} />
-        </lineSegments>
-
-        <pointLight color={color} intensity={1.5} distance={4} />
-      </group>
-    </Float>
-  )
-}
-
-// Game Controller
-function GameController({
-  position,
-  color,
-}: {
-  position: [number, number, number]
-  color: string
-}) {
-  return (
-    <Float speed={1.5} rotationIntensity={1.5} floatIntensity={1.2}>
-      <group position={position} rotation={[0.3, 0.5, 0]}>
-        {/* Main body */}
-        <mesh castShadow>
-          <boxGeometry args={[2, 1, 0.4] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.6}
-            roughness={0.2}
-          />
-        </mesh>
-
-        {/* Left grip */}
-        <mesh position={[-0.8, -0.3, 0]} rotation={[0, 0, 0.3]} castShadow>
-          <boxGeometry args={[0.6, 0.8, 0.4] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.6}
-            roughness={0.2}
-          />
-        </mesh>
-
-        {/* Right grip */}
-        <mesh position={[0.8, -0.3, 0]} rotation={[0, 0, -0.3]} castShadow>
-          <boxGeometry args={[0.6, 0.8, 0.4] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.6}
-            roughness={0.2}
-          />
-        </mesh>
-
-        {/* Buttons */}
-        {[-0.3, 0, 0.3].map((x, i) => (
-          <mesh key={i} position={[x, 0.2, 0.21]} castShadow>
-            <cylinderGeometry args={[0.1, 0.1, 0.1, 32] as any} />
-            <meshStandardMaterial
-              color="#ffffff"
-              emissive="#ffffff"
-              emissiveIntensity={0.5}
-            />
-          </mesh>
-        ))}
-
-        {/* D-pad */}
-        <mesh position={[-0.5, 0, 0.21]} castShadow>
-          <boxGeometry args={[0.15, 0.4, 0.1] as any} />
-          <meshStandardMaterial color="#333333" />
-        </mesh>
-        <mesh position={[-0.5, 0, 0.21]} castShadow>
-          <boxGeometry args={[0.4, 0.15, 0.1] as any} />
-          <meshStandardMaterial color="#333333" />
-        </mesh>
-
-        <pointLight color={color} intensity={2} distance={5} />
-      </group>
-    </Float>
-  )
-}
-
-// Checkers Piece
-function CheckersPiece({
-  position,
-  color,
-}: {
-  position: [number, number, number]
-  color: string
-}) {
-  return (
-    <Float speed={2.5} rotationIntensity={1} floatIntensity={1.2}>
-      <group position={position}>
-        {/* Bottom disc */}
-        <mesh position={[0, -0.15, 0]} castShadow>
-          <cylinderGeometry args={[0.6, 0.65, 0.15, 32] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.5}
-            roughness={0.3}
-          />
-        </mesh>
-
-        {/* Top disc */}
-        <mesh position={[0, 0.05, 0]} castShadow>
-          <cylinderGeometry args={[0.55, 0.6, 0.2, 32] as any} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.5}
-            roughness={0.3}
-          />
-        </mesh>
-
-        {/* Crown for king */}
-        <mesh position={[0, 0.2, 0]} castShadow>
-          <torusGeometry args={[0.3, 0.05, 16, 32] as any} />
-          <meshStandardMaterial
-            color="#ffd700"
-            metalness={0.9}
-            roughness={0.1}
-            emissive="#ffd700"
-            emissiveIntensity={0.3}
-          />
-        </mesh>
-
-        <pointLight color={color} intensity={1.2} distance={3} />
-      </group>
-    </Float>
-  )
-}
-
-function Hero3DScene() {
-  return (
-    <>
-      <CameraRig />
-
-      {/* Cinematic Lighting */}
-      <Environment preset="city" />
-      <ambientLight intensity={0.5} />
-      <spotLight
-        position={[10, 10, 10]}
-        angle={0.15}
-        penumbra={1}
-        intensity={10}
-        castShadow
-        color="#ffffff"
-      />
-      <pointLight position={[-10, -10, -10]} intensity={2} color="#ec4899" />
-
-      {/* Background Ambience */}
-      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-      <Sparkles count={150} scale={20} size={4} speed={0.4} opacity={0.5} color="#22c55e" />
-
-      {/* Main Center Piece - Chess King */}
-      <Center>
-        <ChessKing position={[0, -0.5, 0]} color="#ffffff" />
-      </Center>
-
-      {/* Chess Pawns */}
-      <ChessPawn position={[-3.5, 0, 2]} color="#22c55e" />
-      <ChessPawn position={[3.5, 1, -2]} color="#ec4899" />
-
-      {/* Dice */}
-      <FloatingDie position={[-2.5, 2.5, -1]} />
-      <FloatingDie position={[2.5, -2, 1]} />
-
-      {/* Playing Cards */}
-      <PlayingCard position={[-5, -1, -3]} color="#ef4444" />
-      <PlayingCard position={[4.5, 2.5, -4]} color="#3b82f6" />
-
-      {/* Game Controllers */}
-      <GameController position={[-4, 3, 1]} color="#8b5cf6" />
-      <GameController position={[5, -2.5, 2]} color="#f59e0b" />
-
-      {/* Checkers Pieces */}
-      <CheckersPiece position={[1.5, 3, -2]} color="#dc2626" />
-      <CheckersPiece position={[-1.5, -3, 1.5]} color="#171717" />
-
-      {/* Post Processing Pipeline */}
-      <EffectComposer>
-        <Bloom luminanceThreshold={1} mipmapBlur intensity={1.5} radius={0.6} />
-        <ChromaticAberration offset={[0.002, 0.002] as any} />
-      </EffectComposer>
-    </>
-  )
-}
-
-function LoadingFallback() {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-4">
-        <Loader2 className="w-12 h-12 text-primary animate-spin" />
-        <span className="text-muted-foreground">Loading 3D Experience...</span>
       </div>
     </div>
   )
@@ -483,6 +75,7 @@ const games: GameConfig[] = [
     players: "1-2",
     difficulty: "hard",
     color: "#22c55e",
+    image: "/chess.png",
   },
   {
     id: "checkers",
@@ -492,6 +85,7 @@ const games: GameConfig[] = [
     players: "1-2",
     difficulty: "medium",
     color: "#3b82f6",
+    image: "/checkers.jpg",
   },
   {
     id: "tic-tac-toe",
@@ -501,6 +95,7 @@ const games: GameConfig[] = [
     players: "1-2",
     difficulty: "easy",
     color: "#8b5cf6",
+    image: "/tictoe.jpg",
   },
   {
     id: "connect-four",
@@ -510,6 +105,7 @@ const games: GameConfig[] = [
     players: "1-2",
     difficulty: "medium",
     color: "#ef4444",
+    image: "/connect-four.jpg",
   },
   {
     id: "memory",
@@ -519,6 +115,7 @@ const games: GameConfig[] = [
     players: "1-4",
     difficulty: "easy",
     color: "#f59e0b",
+    image: "/memory.webp",
   },
   {
     id: "snake-ladders",
@@ -528,6 +125,7 @@ const games: GameConfig[] = [
     players: "2-4",
     difficulty: "easy",
     color: "#10b981",
+    image: "/snake-ladders.jpg",
   },
   {
     id: "ludo",
@@ -537,6 +135,7 @@ const games: GameConfig[] = [
     players: "2-4",
     difficulty: "easy",
     color: "#ec4899",
+    image: "/ludo.jpg",
   },
   {
     id: "reversi",
@@ -546,6 +145,7 @@ const games: GameConfig[] = [
     players: "1-2",
     difficulty: "hard",
     color: "#06b6d4",
+    image: "/reversi.jpg",
   },
   {
     id: "minesweeper",
@@ -555,6 +155,7 @@ const games: GameConfig[] = [
     players: "1",
     difficulty: "medium",
     color: "#64748b",
+    image: "/minesweeper.jpg",
   },
   {
     id: "2048",
@@ -564,6 +165,7 @@ const games: GameConfig[] = [
     players: "1",
     difficulty: "medium",
     color: "#eab308",
+    image: "/2048.jpg",
   },
 ]
 
@@ -640,20 +242,7 @@ export function LandingPage({
       {/* 3D Hero Section */}
       <section className="relative h-screen overflow-hidden">
         <div className="absolute inset-0 bg-[#050505] z-0">
-          {mounted && (
-            <Suspense fallback={<LoadingFallback />}>
-              <Canvas
-                shadows
-                camera={{ position: [0, 0, 12], fov: 45 }}
-                dpr={[1, 2]}
-                gl={{ antialias: false }}
-              >
-                <color attach="background" args={["#050505"] as any} />
-                <fog attach="fog" args={["#050505", 10, 40] as any} />
-                <Hero3DScene />
-              </Canvas>
-            </Suspense>
-          )}
+          {mounted ? <Hero3DCanvas /> : <Hero3DFallback />}
         </div>
 
         {/* Gradient overlays */}
@@ -662,7 +251,6 @@ export function LandingPage({
 
         {/* Hero Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-4 z-20 pointer-events-none">
-          {/* Allow pointer events only on interactive elements */}
           <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -806,16 +394,20 @@ export function LandingPage({
                       className="absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       style={{ backgroundColor: `${game.color}33` }}
                     />
-                    <div className="relative bg-card border border-border rounded-2xl p-6 h-full hover:border-primary/50 transition-all duration-300 overflow-hidden">
-                      {/* Animated background gradient on hover */}
-                      <div
-                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{
-                          background: `radial-gradient(circle at 50% 0%, ${game.color}15, transparent 70%)`,
-                        }}
-                      />
+                    <div className="relative bg-card border border-border rounded-2xl overflow-hidden h-full hover:border-primary/50 transition-all duration-300">
+                      {/* Game Image */}
+                      <div className="relative h-40 w-full overflow-hidden bg-linear-to-br from-gray-900 to-gray-800">
+                        <div className="absolute inset-0 bg-linear-to-t from-card via-transparent to-transparent z-10" />
+                        <Image
+                          src={game.image}
+                          alt={game.name}
+                          fill
+                          className="object-cover opacity-70 group-hover:opacity-90 group-hover:scale-110 transition-all duration-500"
+                        />
+                      </div>
 
-                      <div className="relative z-10">
+                      {/* Card Content */}
+                      <div className="p-6">
                         <div className="flex items-start justify-between mb-4">
                           <div
                             className="w-12 h-12 rounded-xl flex items-center justify-center transition-colors"
@@ -828,10 +420,10 @@ export function LandingPage({
                           </div>
                           <div style={{ borderColor: `${game.color}50`, color: game.color }}>
                             <Badge
-                                variant="outline"
-                                className="text-xs border-current"
+                              variant="outline"
+                              className="text-xs border-current"
                             >
-                                {game.difficulty}
+                              {game.difficulty}
                             </Badge>
                           </div>
                         </div>
@@ -949,6 +541,23 @@ export function LandingPage({
           </p>
         </div>
       </footer>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0) translateX(0);
+          }
+          25% {
+            transform: translateY(-20px) translateX(10px);
+          }
+          50% {
+            transform: translateY(-10px) translateX(-10px);
+          }
+          75% {
+            transform: translateY(-30px) translateX(5px);
+          }
+        }
+      `}</style>
     </motion.div>
   )
 }
