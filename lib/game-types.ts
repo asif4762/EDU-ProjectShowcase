@@ -1,3 +1,5 @@
+import { StaticImport } from "next/dist/shared/lib/get-img-props"
+
 export interface Position {
   row: number
   col: number
@@ -42,6 +44,7 @@ export interface GameState {
 }
 
 export interface GameConfig {
+  image: string | StaticImport
   id: GameType
   name: string
   description: string
